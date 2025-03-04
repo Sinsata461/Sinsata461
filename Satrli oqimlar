@@ -1,0 +1,112 @@
+📌 C++ dagi barcha satrli oqimlar (string streams) headerlari
+C++ tilida satrlarni oqim sifatida qayta ishlash uchun 3 ta asosiy header mavjud:
+
+Header	Vazifasi	Misollar
+<sstream>	Satrlarni oqim sifatida qayta ishlash (std::stringstream, std::istringstream, std::ostringstream)	std::stringstream ss; ss << 123;
+<iostream>	Konsolga chiqarish va kiritish (std::cin, std::cout, std::endl)	std::cout << "Hello";
+<cstdio>	C uslubidagi kiritish-chiqarish (printf, scanf)	sprintf(buf, "X=%d", x);
+Keling, har birini batafsil tushuntiramiz va misollar bilan ko‘rib chiqamiz.
+
+➊ <sstream> - Satrlarni oqim sifatida ishlash
+Vazifasi: Matnni oqim sifatida boshqarish – satrlarni bo‘lish, raqamga aylantirish, formatlash va boshqa operatsiyalar uchun ishlatiladi.
+
+Klass	Vazifasi	Misollar
+std::stringstream	Umumiy satr oqimi	std::stringstream ss("123 456")
+std::istringstream	Satrni o‘qish oqimi	std::istringstream iss("123 456")
+std::ostringstream	Satrga yozish oqimi	std::ostringstream oss; oss << 123;
+Misol: Satrni bo‘lish va raqamga o‘tkazish
+cpp
+Копировать
+Редактировать
+#include <iostream>
+#include <sstream>
+using namespace std;
+
+int main() {
+    string matn = "123 456 789";
+    stringstream ss(matn);
+    int a, b, c;
+    
+    ss >> a >> b >> c; // Satrni bo‘lib o‘qish
+    cout << "Sonlar: " << a << ", " << b << ", " << c << endl;
+
+    return 0;
+}
+📌 Qayerda qo‘llaniladi?
+✔ Satrni raqamga yoki boshqa turga aylantirish
+✔ CSV yoki matn formatidagi ma’lumotlarni tahlil qilish
+✔ Dinamik matn yaratish va formatlash
+
+➋ <iostream> - Konsol kiritish va chiqarish
+Vazifasi: Konsoldan ma’lumot kiritish (std::cin) va chiqarish (std::cout) uchun ishlatiladi.
+
+Operator/Funksiyalar	Vazifasi	Misollar
+std::cin	Foydalanuvchidan ma’lumot olish	std::cin >> x;
+std::cout	Konsolga chiqarish	std::cout << "Hello";
+std::endl	Yangi qatordan boshlash	std::cout << std::endl;
+Misol: Foydalanuvchidan matn olish
+cpp
+Копировать
+Редактировать
+#include <iostream>
+using namespace std;
+
+int main() {
+    string ism;
+    cout << "Ismingizni kiriting: ";
+    cin >> ism;
+    cout << "Salom, " << ism << "!" << endl;
+    return 0;
+}
+📌 Qayerda qo‘llaniladi?
+✔ Konsoldan ma’lumot olish
+✔ Foydalanuvchiga natijalarni chiqarish
+✔ Oddiy matn oqimlari bilan ishlash
+
+➌ <cstdio> - C uslubidagi kiritish-chiqarish
+Vazifasi: C uslubidagi formatlangan kiritish-chiqarish (printf, scanf) uchun ishlatiladi.
+
+Funksiya	Vazifasi	Misollar
+printf(format, ...)	Formatlangan chiqarish	printf("X=%d", x);
+scanf(format, ...)	Formatlangan kiritish	scanf("%d", &x);
+sprintf(buffer, format, ...)	Satrga formatlangan yozish	sprintf(buf, "X=%d", x);
+sscanf(buffer, format, ...)	Satrni formatlangan o‘qish	sscanf(buf, "%d", &x);
+Misol: sprintf() va sscanf() bilan ishlash
+cpp
+Копировать
+Редактировать
+#include <cstdio>
+#include <iostream>
+using namespace std;
+
+int main() {
+    char buffer[50];
+
+    // Satrga raqam yozish
+    int x = 42;
+    sprintf(buffer, "X ning qiymati: %d", x);
+    cout << buffer << endl;
+
+    // Satrni raqamga aylantirish
+    int y;
+    sscanf(buffer, "X ning qiymati: %d", &y);
+    cout << "O‘qilgan son: " << y << endl;
+
+    return 0;
+}
+📌 Qayerda qo‘llaniladi?
+✔ Resurs cheklangan dasturlarda (mikrokontrollerlar, OS kernel)
+✔ C tili asosida yozilgan kodlar bilan ishlashda
+✔ Tezkor matn formatlash va pars qilish
+
+🎯 Xulosa
+C++ da satrlar bilan ishlash uchun 3 ta asosiy header mavjud:
+
+1️⃣ <sstream> → Satrlarni oqim sifatida ishlatish (stringstream, istringstream, ostringstream)
+2️⃣ <iostream> → Konsoldan kiritish (cin) va chiqarish (cout)
+3️⃣ <cstdio> → C uslubidagi formatlangan kiritish-chiqarish (printf, sprintf, sscanf)
+
+Qachon ishlatish kerak?
+✅ Matnni tahlil qilish va formatlash → <sstream>
+✅ Konsoldan o‘qish va yozish → <iostream>
+✅ C uslubidagi formatlangan chiqarish → <cstdio>
