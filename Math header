@@ -1,0 +1,164 @@
+C++ dasturlash tilida matematik kutubxonalar turli xil hisob-kitob amallarini bajarish uchun ishlatiladi. Quyida C++ dagi barcha matematik header fayllar, ularning vazifalari va ishlatilishi haqida to‘liq ma’lumot beraman.
+
+📌 C++ dagi barcha matematik kutubxona headerlari
+C++ da matematik amallarni bajarish uchun quyidagi 7 ta asosiy header mavjud:
+
+Header	Vazifasi
+<cmath>	Standart matematik funksiyalar (sin, cos, sqrt, pow, log, exp, abs)
+<cstdlib>	Tasodifiy sonlar generatsiyasi (rand(), srand(), abs())
+<climits>	Butun sonlarning maksimal va minimal chegaralari (INT_MAX, INT_MIN)
+<cfloat>	Haqiqiy sonlarning chegaralari (FLT_MAX, DBL_MIN)
+<complex>	Kompleks sonlar bilan ishlash (std::complex<double>)
+<numeric>	Sonlar bilan amallar (std::accumulate(), std::gcd(), std::lcm())
+<valarray>	Matematik massivi bilan ishlash (std::valarray<int>)
+Keling, har birini batafsil tushuntiramiz va misollar bilan ko‘rib chiqamiz.
+
+➊ <cmath> - Standart matematik funksiyalar
+Vazifasi: Bu header matematik funksiyalarni taqdim etadi (sin, cos, sqrt, pow, log, exp, abs).
+
+Funksiya	Vazifasi	Misol
+sqrt(x)	Kvadrat ildiz	sqrt(25) → 5
+pow(x, y)	Darajaga oshirish	pow(2, 3) → 8
+sin(x), cos(x), tan(x)	Trigonometrik funksiyalar	sin(3.14)
+log(x)	Natural logarifm	log(2.718) → 1
+log10(x)	10 asosli logarifm	log10(100) → 2
+exp(x)	Exponenta (e^x)	exp(1) → 2.718
+abs(x)	Modul (musbat qiymat)	abs(-5) → 5
+Misol:
+
+cpp
+Копировать
+Редактировать
+#include <iostream>
+#include <cmath>
+using namespace std;
+
+int main() {
+    cout << "sqrt(16) = " << sqrt(16) << endl;
+    cout << "pow(2, 5) = " << pow(2, 5) << endl;
+    cout << "cos(3.14) = " << cos(3.14) << endl;
+    return 0;
+}
+➋ <cstdlib> - Tasodifiy sonlar va umumiy funksiyalar
+Vazifasi: Tasodifiy sonlar yaratish (rand()), xotira ajratish (malloc()), absolyut qiymat (abs()).
+
+Funksiya	Vazifasi	Misol
+rand()	0 dan RAND_MAX gacha tasodifiy son qaytaradi	rand() % 100
+srand(x)	Random generatorni boshlash	srand(time(0))
+abs(x)	Absolyut qiymat	abs(-7) → 7
+Misol:
+
+cpp
+Копировать
+Редактировать
+#include <iostream>
+#include <cstdlib>
+#include <ctime>
+using namespace std;
+
+int main() {
+    srand(time(0)); // Randomni boshlash
+    cout << "Tasodifiy son: " << rand() % 100 << endl;
+    return 0;
+}
+➌ <climits> - Butun sonlar chegaralari
+Vazifasi: Butun sonlarning maksimal va minimal qiymatlarini o‘z ichiga oladi.
+
+O‘zgaruvchi	Vazifasi
+INT_MAX	int ning maksimal qiymati (2147483647)
+INT_MIN	int ning minimal qiymati (-2147483648)
+LONG_MAX	long ning maksimal qiymati
+LONG_MIN	long ning minimal qiymati
+Misol:
+
+cpp
+Копировать
+Редактировать
+#include <iostream>
+#include <climits>
+using namespace std;
+
+int main() {
+    cout << "int ning maksimal qiymati: " << INT_MAX << endl;
+    cout << "int ning minimal qiymati: " << INT_MIN << endl;
+    return 0;
+}
+➍ <cfloat> - Haqiqiy sonlar chegaralari
+Vazifasi: float, double, long double ning chegaralarini aniqlaydi.
+
+O‘zgaruvchi	Vazifasi
+FLT_MAX	float ning maksimal qiymati
+DBL_MAX	double ning maksimal qiymati
+Misol:
+
+cpp
+Копировать
+Редактировать
+#include <iostream>
+#include <cfloat>
+using namespace std;
+
+int main() {
+    cout << "double ning maksimal qiymati: " << DBL_MAX << endl;
+    return 0;
+}
+➎ <complex> - Kompleks sonlar bilan ishlash
+Vazifasi: Kompleks sonlar bilan ishlash.
+
+Funksiya	Vazifasi
+std::complex<double>	Kompleks son yaratish
+real(c)	Kompleks sonning haqiqiy qismi
+imag(c)	Kompleks sonning mavhum qismi
+Misol:
+
+cpp
+Копировать
+Редактировать
+#include <iostream>
+#include <complex>
+using namespace std;
+
+int main() {
+    complex<double> c(3.0, 4.0);
+    cout << "Modul: " << abs(c) << endl; // √(3² + 4²) = 5
+    return 0;
+}
+➏ <numeric> - Sonlar bilan amallar
+Vazifasi: Massiv yig‘indisini hisoblash, EKUB/EKUK topish.
+
+Funksiya	Vazifasi
+std::accumulate()	Massiv yig‘indisi
+std::gcd(a, b)	Eng katta umumiy bo‘luvchi
+std::lcm(a, b)	Eng kichik umumiy karrali
+Misol:
+
+cpp
+Копировать
+Редактировать
+#include <iostream>
+#include <numeric>
+using namespace std;
+
+int main() {
+    int a = 12, b = 18;
+    cout << "EKUB: " << gcd(a, b) << endl;
+    cout << "EKUK: " << lcm(a, b) << endl;
+    return 0;
+}
+➐ <valarray> - Matematik massivi
+Vazifasi: Massiv ustida yig‘indi va boshqa matematik amallar bajarish.
+
+Misol:
+
+cpp
+Копировать
+Редактировать
+#include <iostream>
+#include <valarray>
+using namespace std;
+
+int main() {
+    valarray<int> v = {1, 2, 3, 4, 5};
+    cout << "Yig‘indi: " << v.sum() << endl;
+    return 0;
+}
