@@ -1,0 +1,143 @@
+🔹 STL konteynerlari va ularning headerlari
+Quyidagi jadval STL konteynerlarining to‘liq ro‘yxati, ularning vazifasi va qayerda ishlatilishi haqida ma’lumot beradi.
+
+Header	Konteyner	Vazifasi	Foydalanish misoli
+<vector>	std::vector	Dinamik massiv	std::vector<int> v;
+<array>	std::array	Statik uzunlikdagi massiv	std::array<int, 5> arr;
+<list>	std::list	Ikki bog‘langan ro‘yxat	std::list<int> l;
+<forward_list>	std::forward_list	Bitta bog‘langan ro‘yxat	std::forward_list<int> fl;
+<deque>	std::deque	Ikki tomonlama navbat	std::deque<int> d;
+<stack>	std::stack	LIFO (oxirgi bo‘lib kirdi, birinchi bo‘lib chiqdi)	std::stack<int> s;
+<queue>	std::queue	FIFO (birinchi bo‘lib kirdi, birinchi bo‘lib chiqdi)	std::queue<int> q;
+<priority_queue>	std::priority_queue	Katta/kichik ustuvorlik navbati	std::priority_queue<int> pq;
+<set>	std::set	Takrorlanmaydigan tartiblangan to‘plam	std::set<int> s;
+<unordered_set>	std::unordered_set	Takrorlanmaydigan tartiblanmagan to‘plam	std::unordered_set<int> us;
+<map>	std::map	Kalit-qiymat juftliklari (tartiblangan)	std::map<int, string> m;
+<unordered_map>	std::unordered_map	Kalit-qiymat juftliklari (tartiblanmagan)	std::unordered_map<int, string> um;
+<multiset>	std::multiset	Takrorlanuvchi elementlarga ruxsat beruvchi tartiblangan to‘plam	std::multiset<int> ms;
+<multimap>	std::multimap	Bir nechta bir xil kalitga ruxsat beruvchi tartiblangan xarita	std::multimap<int, string> mm;
+<bitset>	std::bitset	Bit massiv (bit-wise operatsiyalar)	std::bitset<8> bs;
+📝 Har bir headerning tavsifi va ishlatilishi
+Keling, har bir headerni batafsil tushuntirib, misollar keltiramiz.
+
+1️⃣ <vector> - Dinamik massiv
+Vazifasi: Dinamik o‘lchamli massiv.
+Foydalanish:
+
+Oddiy massivlardan ko‘ra ko‘proq qulay, chunki avtomatik ravishda o‘lchami o‘zgaradi.
+Indeks bo‘yicha kirish mumkin (v[i]).
+Misol:
+
+cpp
+Копировать
+Редактировать
+#include <iostream>
+#include <vector>
+using namespace std;
+
+int main() {
+    vector<int> v = {1, 2, 3, 4, 5};
+    v.push_back(6); // Oxiriga element qo'shish
+    cout << "Element: " << v[2] << endl; // 3
+    return 0;
+}
+2️⃣ <list> - Ikki bog‘langan ro‘yxat
+Vazifasi: Bog‘langan ro‘yxat tuzilmasi.
+Foydalanish:
+
+O‘rtaga tez qo‘shish va o‘chirish imkonini beradi.
+Indeks bo‘yicha murojaat qiyin (l[2] kabi ishlamaydi).
+Misol:
+
+cpp
+Копировать
+Редактировать
+#include <iostream>
+#include <list>
+using namespace std;
+
+int main() {
+    list<int> l = {10, 20, 30};
+    l.push_back(40); // Oxiriga qo'shish
+    l.push_front(5); // Boshiga qo'shish
+    cout << "Birinchi element: " << l.front() << endl;
+    return 0;
+}
+3️⃣ <map> - Tartiblangan kalit-qiymat juftliklari
+Vazifasi: Kalit-qiymat juftliklarini tartiblangan holda saqlaydi.
+Foydalanish:
+
+Kalit bo‘yicha tezkor qidirish (O(log N)) imkonini beradi.
+O‘zgaruvchan indeks sifatida ishlatilishi mumkin.
+Misol:
+
+cpp
+Копировать
+Редактировать
+#include <iostream>
+#include <map>
+using namespace std;
+
+int main() {
+    map<int, string> m;
+    m[1] = "Bir";
+    m[2] = "Ikki";
+    cout << "Kalit 1 uchun qiymat: " << m[1] << endl;
+    return 0;
+}
+4️⃣ <unordered_map> - HashMap uslubidagi kalit-qiymat juftliklari
+Vazifasi: Tartiblanmagan kalit-qiymat juftliklari (tezroq qidirish).
+Foydalanish:
+
+Tezroq (O(1)) qidirish imkonini beradi, lekin tartib saqlanmaydi.
+Misol:
+
+cpp
+Копировать
+Редактировать
+#include <iostream>
+#include <unordered_map>
+using namespace std;
+
+int main() {
+    unordered_map<int, string> um;
+    um[10] = "Salom";
+    um[20] = "Dunyo";
+    cout << um[10] << endl;
+    return 0;
+}
+5️⃣ <set> - Takrorlanmaydigan elementlar to‘plami
+Vazifasi: Unikal elementlarni tartib bilan saqlash.
+Foydalanish:
+
+Elementlar takrorlanmaydi.
+Tartiblangan bo‘lib qoladi (O(log N) qidirish).
+Misol:
+
+cpp
+Копировать
+Редактировать
+#include <iostream>
+#include <set>
+using namespace std;
+
+int main() {
+    set<int> s = {5, 1, 3, 2};
+    s.insert(4); // Yangi element qo‘shish
+    cout << "Set elementlari: ";
+    for (int x : s) cout << x << " "; // 1 2 3 4 5
+    return 0;
+}
+🎯 Xulosa
+C++ da turli ma’lumot tuzilmalari uchun ko‘plab konteynerlar mavjud. Ularning qaysi biri ishlatilishini vaziyatga qarab tanlash kerak.
+
+Agar sizga kerak bo‘lsa...	Qaysi header?
+🔹 Dinamik massiv (o‘lchami o‘zgaradigan array)	<vector>
+🔹 Statik uzunlikdagi massiv	<array>
+🔹 Bog‘langan ro‘yxatlar (linked list)	<list>, <forward_list>
+🔹 FIFO navbat (Queue)	<queue>
+🔹 LIFO stack	<stack>
+🔹 Unikal va tartiblangan elementlar	<set>
+🔹 HashSet uslubidagi tezkor to‘plam	<unordered_set>
+🔹 Tartiblangan kalit-qiymat juftliklari	<map>
+🔹 Tezkor kalit-qiymat juftliklari (HashMap uslubida)	<unordered_map>
