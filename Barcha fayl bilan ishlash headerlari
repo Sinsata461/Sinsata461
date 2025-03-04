@@ -1,0 +1,125 @@
+📌 C++ dagi barcha fayllar bilan ishlash headerlari
+C++ tilida fayllar bilan ishlash uchun 3 ta asosiy header mavjud:
+
+Header	Vazifasi	Misollar
+<fstream>	Fayllarni o‘qish va yozish (ifstream, ofstream, fstream)	std::ifstream, std::ofstream, std::fstream
+<cstdio>	C uslubidagi fayl operatsiyalari (FILE*, fopen, fclose)	fopen(), fclose(), fgets()
+<filesystem>	Fayl tizimini boshqarish (std::filesystem::path, exists())	std::filesystem::exists(), create_directory()
+Keling, har birini batafsil tushuntiramiz va misollar bilan ko‘rib chiqamiz.
+
+➊ <fstream> - C++ fayl oqimlari (File Streams)
+Vazifasi: C++ da fayllarni o‘qish, yozish va tahrirlash uchun ishlatiladi.
+
+Klass	Vazifasi	Misollar
+std::ifstream	Fayldan o‘qish (input file stream)	ifstream in("data.txt")
+std::ofstream	Faylga yozish (output file stream)	ofstream out("data.txt")
+std::fstream	O‘qish va yozish (file stream)	`fstream file("data.txt", ios::in
+Misol: Faylga yozish va o‘qish
+cpp
+Копировать
+Редактировать
+#include <iostream>
+#include <fstream>
+using namespace std;
+
+int main() {
+    // Faylga yozish
+    ofstream yoz("example.txt");
+    yoz << "Salom, dunyo!" << endl;
+    yoz.close(); // Faylni yopish
+
+    // Fayldan o‘qish
+    ifstream oqi("example.txt");
+    string s;
+    while (getline(oqi, s)) {
+        cout << "Fayldan olingan: " << s << endl;
+    }
+    oqi.close();
+
+    return 0;
+}
+📌 Qayerda qo‘llaniladi?
+✔ Matn fayllarini yaratish, saqlash va o‘qish
+✔ Log fayllarini yozish va kuzatish
+✔ Dastur sozlamalarini faylda saqlash
+
+➋ <cstdio> - C uslubidagi fayllar bilan ishlash
+Vazifasi: C uslubidagi fayl operatsiyalari (FILE*, fopen, fclose) orqali ishlaydi.
+
+Funksiya	Vazifasi	Misollar
+fopen(filename, mode)	Fayl ochish	FILE* f = fopen("test.txt", "r")
+fclose(f)	Faylni yopish	fclose(f)
+fgets(buffer, size, f)	Fayldan qator o‘qish	fgets(buf, 100, f)
+fprintf(f, format, ...)	Faylga yozish	fprintf(f, "Hello %d", 10)
+fscanf(f, format, ...)	Fayldan o‘qish	fscanf(f, "%d", &x)
+fseek(f, offset, whence)	Fayl kursorini siljitish	fseek(f, 0, SEEK_END)
+Misol: Faylga yozish va o‘qish (C uslubi)
+cpp
+Копировать
+Редактировать
+#include <cstdio>
+
+int main() {
+    FILE* fayl = fopen("test.txt", "w");
+    fprintf(fayl, "Salom, fayl!\n");
+    fclose(fayl);
+
+    char buffer[100];
+    fayl = fopen("test.txt", "r");
+    fgets(buffer, 100, fayl);
+    fclose(fayl);
+
+    printf("Fayldan o‘qildi: %s", buffer);
+    return 0;
+}
+📌 Qayerda qo‘llaniladi?
+✔ Eski C dasturlarida
+✔ Kam resurs talab qiluvchi tizimlarda (microcontroller, OS)
+✔ Binar fayllar bilan ishlashda
+
+➌ <filesystem> - Fayl tizimini boshqarish (C++17)
+Vazifasi: Fayllar va papkalar bilan ishlash (yaratish, o‘chirish, mavjudligini tekshirish).
+
+Funksiya	Vazifasi	Misollar
+std::filesystem::exists(path)	Fayl yoki katalog borligini tekshirish	exists("data.txt")
+std::filesystem::remove(path)	Fayl yoki katalogni o‘chirish	remove("old.txt")
+std::filesystem::create_directory(path)	Katalog yaratish	create_directory("new_folder")
+std::filesystem::file_size(path)	Fayl hajmini olish	file_size("data.txt")
+std::filesystem::rename(old, new)	Fayl nomini o‘zgartirish	rename("old.txt", "new.txt")
+Misol: Fayl borligini tekshirish va katalog yaratish
+cpp
+Копировать
+Редактировать
+#include <iostream>
+#include <filesystem>
+using namespace std;
+namespace fs = std::filesystem;
+
+int main() {
+    string filename = "data.txt";
+
+    if (fs::exists(filename)) {
+        cout << filename << " mavjud!" << endl;
+    } else {
+        cout << filename << " mavjud emas!" << endl;
+    }
+
+    fs::create_directory("test_folder"); // Yangi katalog yaratish
+    return 0;
+}
+📌 Qayerda qo‘llaniladi?
+✔ Fayllarning mavjudligini tekshirish
+✔ Kataloglarni avtomatik yaratish
+✔ Fayl va katalog boshqarish tizimlari
+
+🎯 Xulosa
+C++ da fayllar bilan ishlash uchun 3 ta asosiy header mavjud:
+
+1️⃣ <fstream> → Eng ko‘p ishlatiladigan C++ fayl oqimlari
+2️⃣ <cstdio> → C uslubidagi fayl operatsiyalari (FILE*)
+3️⃣ <filesystem> → Fayl tizimini boshqarish (exists(), create_directory())
+
+Qachon ishlatish kerak?
+✅ Faylni ochish va matn yozish → <fstream>
+✅ C uslubidagi operatsiyalar (FILE*) → <cstdio>
+✅ Fayl yoki katalog borligini tekshirish → <filesystem>
