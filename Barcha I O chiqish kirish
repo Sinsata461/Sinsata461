@@ -1,0 +1,136 @@
+📌 C++ Kirish-Chiqarish (I/O) headerlari
+C++ da kirish (input) va chiqarish (output) uchun bir nechta headerlar mavjud. Ular konsol, fayl, satr oqimlari va formatlangan I/O uchun ishlatiladi.
+
+1. <iostream> - Konsolga kiritish va chiqarish
+Vazifasi: Konsolga ma'lumot chiqarish va kiritish uchun ishlatiladi.
+Foydalanish:
+
+std::cout – Konsolga ma’lumot chiqarish.
+std::cin – Konsoldan ma’lumot kiritish.
+std::cerr – Xatoliklarni chiqarish.
+std::clog – Log ma’lumotlarini chiqarish.
+Misol:
+
+cpp
+Копировать
+Редактировать
+#include <iostream>
+using namespace std;
+
+int main() {
+    int yosh;
+    cout << "Yoshingizni kiriting: "; // Konsolga chiqarish
+    cin >> yosh; // Konsoldan kiritish
+    cout << "Sizning yoshingiz: " << yosh << endl;
+    return 0;
+}
+2. <iomanip> - Formatlangan chiqarish
+Vazifasi: Konsolga chiroyli formatda ma’lumot chiqarish uchun ishlatiladi.
+Foydalanish:
+
+std::setw(n) – Belgilar sonini belgilaydi.
+std::setprecision(n) – Kasr sonlar aniqligini belgilaydi.
+std::fixed – Haqiqiy sonlarni qat’iy kasr shaklida chiqarish.
+std::scientific – Ilmiy formatda chiqarish.
+Misol:
+
+cpp
+Копировать
+Редактировать
+#include <iostream>
+#include <iomanip>
+using namespace std;
+
+int main() {
+    double pi = 3.1415926535;
+    cout << fixed << setprecision(3) << "PI: " << pi << endl;
+    cout << setw(10) << "Salom" << endl; // 10 ta joy ajratib chiqaradi
+    return 0;
+}
+3. <fstream> - Fayllar bilan ishlash
+Vazifasi: Fayllardan o‘qish va yozish uchun ishlatiladi.
+Foydalanish:
+
+std::ifstream – Faqat o‘qish uchun fayl ochish.
+std::ofstream – Faqat yozish uchun fayl ochish.
+std::fstream – O‘qish va yozish uchun fayl ochish.
+Misol (Faylga yozish va o‘qish):
+
+cpp
+Копировать
+Редактировать
+#include <iostream>
+#include <fstream>
+using namespace std;
+
+int main() {
+    ofstream yoz("test.txt"); // Faylga yozish
+    yoz << "Salom, faylga yozildi!" << endl;
+    yoz.close();
+
+    ifstream oqi("test.txt"); // Fayldan o‘qish
+    string satr;
+    while (getline(oqi, satr)) {
+        cout << satr << endl;
+    }
+    oqi.close();
+    return 0;
+}
+4. <sstream> - Satrli oqimlar
+Vazifasi: Satrni (string) o‘qish yoki yozish uchun ishlatiladi.
+Foydalanish:
+
+std::stringstream – Satr oqimi yaratish.
+std::istringstream – Satrni o‘qish.
+std::ostringstream – Satrga yozish.
+Misol:
+
+cpp
+Копировать
+Редактировать
+#include <iostream>
+#include <sstream>
+using namespace std;
+
+int main() {
+    string matn = "25 50 75";
+    istringstream iss(matn);
+    int a, b, c;
+    iss >> a >> b >> c; // Satrni ajratib sonlarga o‘tkazish
+    cout << "Sonlar: " << a << ", " << b << ", " << c << endl;
+    return 0;
+}
+5. <cstdio> - C uslubidagi kirish-chiqarish funksiyalari
+Vazifasi: C tilidan meros bo‘lib kelgan kiritish-chiqarish funksiyalarini taqdim etadi.
+Foydalanish:
+
+printf() – Formatlangan chiqarish.
+scanf() – Formatlangan kiritish.
+fopen(), fclose() – Fayllar bilan ishlash.
+fprintf(), fscanf() – Fayllar bilan formatlangan I/O.
+Misol:
+
+cpp
+Копировать
+Редактировать
+#include <cstdio>
+
+int main() {
+    printf("Bu C uslubidagi chiqish\n");
+
+    int yosh;
+    printf("Yoshingizni kiriting: ");
+    scanf("%d", &yosh);
+    printf("Sizning yoshingiz: %d\n", yosh);
+    
+    return 0;
+}
+📌 Xulosa
+C++ da asosiy kirish-chiqarish headerlari quyidagilar:
+
+Header	Vazifasi
+<iostream>	Konsolga chiqarish (cout) va kiritish (cin)
+<iomanip>	Formatlangan chiqarish (setw, setprecision)
+<fstream>	Fayllardan o‘qish (ifstream) va yozish (ofstream)
+<sstream>	Satr oqimi (stringstream) bilan ishlash
+<cstdio>	C uslubidagi I/O (printf, scanf)
