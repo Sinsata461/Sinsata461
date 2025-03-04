@@ -1,0 +1,187 @@
+📝 Har bir headerning vazifasi va ishlatilishi
+Quyida har bir header haqida batafsil tushuntirish va misollar berilgan.
+
+1️⃣ <thread> - Yangi oqim (thread) yaratish
+Vazifasi: Yangi oqim yaratish va kodni parallel bajarish uchun ishlatiladi.
+Foydalanish:
+
+std::thread yordamida yangi oqim yaratish.
+Oqimni join() yoki detach() qilish.
+Misol:
+
+cpp
+Копировать
+Редактировать
+#include <iostream>
+#include <thread>
+
+void printMessage() {
+    std::cout << "Bu boshqa oqimda ishlaydi!\n";
+}
+
+int main() {
+    std::thread t(printMessage); // Yangi oqim yaratish
+    t.join(); // Oqim tugashini kutish
+    return 0;
+}
+2️⃣ <mutex> - Resurslarni sinxronizatsiya qilish
+Vazifasi: Oqimlar orasida resurslarni bloklash va sinxronizatsiya qilish.
+Foydalanish:
+
+std::mutex yordamida o‘zgaruvchilarni bloklash.
+lock_guard yordamida avtomatik bloklash.
+Misol:
+
+cpp
+Копировать
+Редактировать
+#include <iostream>
+#include <thread>
+#include <mutex>
+
+std::mutex mtx;
+
+void printNumber(int n) {
+    std::lock_guard<std::mutex> lock(mtx); // Avtomatik qulf
+    std::cout << "Son: " << n << std::endl;
+}
+
+int main() {
+    std::thread t1(printNumber, 1);
+    std::thread t2(printNumber, 2);
+    t1.join();
+    t2.join();
+    return 0;
+}
+3️⃣ <shared_mutex> - O‘qish va yozish blokirovkalari
+Vazifasi: Bir nechta oqim o‘qiy olishi, lekin faqat bitta oqim yozishi mumkin bo‘lishini ta’minlaydi.
+Foydalanish:
+
+std::shared_mutex bilan parallel o‘qish mumkin, yozish esa yagona oqimga cheklanadi.
+Misol:
+
+cpp
+Копировать
+Редактировать
+#include <iostream>
+#include <thread>
+#include <shared_mutex>
+
+std::shared_mutex mtx;
+
+void readData() {
+    std::shared_lock lock(mtx);
+    std::cout << "O'qilmoqda...\n";
+}
+
+void writeData() {
+    std::unique_lock lock(mtx);
+    std::cout << "Yozilmoqda...\n";
+}
+
+int main() {
+    std::thread t1(readData);
+    std::thread t2(writeData);
+    t1.join();
+    t2.join();
+    return 0;
+}
+4️⃣ <condition_variable> - Oqimlar orasida signallar jo‘natish
+Vazifasi: Oqimlarni uyg‘otish va kutish uchun ishlatiladi.
+Foydalanish:
+
+std::condition_variable yordamida oqimlarni uyg‘otish yoki kutish.
+Misol:
+
+cpp
+Копировать
+Редактировать
+#include <iostream>
+#include <thread>
+#include <condition_variable>
+
+std::mutex mtx;
+std::condition_variable cv;
+bool ready = false;
+
+void worker() {
+    std::unique_lock<std::mutex> lock(mtx);
+    cv.wait(lock, [] { return ready; }); // Oqimni kutish
+    std::cout << "Ish boshladi\n";
+}
+
+int main() {
+    std::thread t(worker);
+    std::this_thread::sleep_for(std::chrono::seconds(1));
+    
+    {
+        std::lock_guard<std::mutex> lock(mtx);
+        ready = true;
+    }
+    cv.notify_one(); // Oqimni uyg‘otish
+    
+    t.join();
+    return 0;
+}
+5️⃣ <future> - Parallel hisoblash natijalarini kutish
+Vazifasi: Oqim parallel ishlaganda natijalarni kutish va qaytarish.
+Foydalanish:
+
+std::async bilan parallel hisoblash.
+std::future natijalarni olish uchun ishlatiladi.
+Misol:
+
+cpp
+Копировать
+Редактировать
+#include <iostream>
+#include <future>
+
+int computeSum(int a, int b) {
+    return a + b;
+}
+
+int main() {
+    std::future<int> result = std::async(computeSum, 5, 10);
+    std::cout << "Natija: " << result.get() << std::endl;
+    return 0;
+}
+6️⃣ <atomic> - Atomar o‘zgaruvchilar
+Vazifasi: Parallel o‘zgaruvchilar xavfsiz ishlashi uchun atomik operatsiyalarni ta’minlaydi.
+Foydalanish:
+
+std::atomic<int> yordamida xavfsiz o‘zgaruvchilar yaratish.
+Misol:
+
+cpp
+Копировать
+Редактировать
+#include <iostream>
+#include <thread>
+#include <atomic>
+
+std::atomic<int> counter(0);
+
+void increment() {
+    for (int i = 0; i < 1000; ++i) {
+        counter++;
+    }
+}
+
+int main() {
+    std::thread t1(increment);
+    std::thread t2(increment);
+    t1.join();
+    t2.join();
+    std::cout << "Natija: " << counter << std::endl;
+    return 0;
+}
+🎯 Xulosa
+Agar siz ko‘p oqimli dasturlash (multithreading) bilan ishlashni istasangiz, quyidagi kutubxonalar yordam beradi:
+
+Agar sizga kerak bo‘lsa...	Qaysi header?
+🏁 Yangi oqim yaratish	<thread>
+🔒 Oqimlarni sinxronizatsiya qilish	<mutex>, <shared_mutex>
+🔔 Oqimlarni uyg‘otish/kutish	<condition_variable>
+🚀 Parallel hisoblash	<future>
+⚡ Atomik operatsiyalar	<atomic>
