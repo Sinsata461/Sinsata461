@@ -1,0 +1,172 @@
+📌 C++ dagi barcha matematik header fayllar
+C++ da matematik amallar bajarish uchun bir nechta kutubxona mavjud. Ular standart arifmetik operatsiyalar, sonlar chegaralari, kompleks sonlar va sonlar bilan ishlash uchun ishlatiladi.
+
+🔢 1. <cmath> - Standart matematik funksiyalar
+Vazifasi: Matematik amallarni bajarish uchun ishlatiladi.
+
+Funksiya	Vazifasi	Misol
+sqrt(x)	Kvadrat ildiz olish	sqrt(25) → 5
+pow(x, y)	Darajaga oshirish	pow(2, 3) → 8
+sin(x), cos(x), tan(x)	Trigonometrik funksiyalar	sin(3.14)
+asin(x), acos(x), atan(x)	Arcsin, arccos, arctan	acos(1) → 0
+log(x)	Natural logarifm	log(2.718) → 1
+log10(x)	10 asosli logarifm	log10(100) → 2
+exp(x)	Exponenta (e^x)	exp(1) → 2.718
+ceil(x)	Yuqoriga yaxlitlash	ceil(2.3) → 3
+floor(x)	Pastga yaxlitlash	floor(2.7) → 2
+round(x)	Eng yaqin butun songa yaxlitlash	round(2.5) → 3
+abs(x)	Absolyut qiymat (modul)	abs(-5) → 5
+Misol:
+
+cpp
+Копировать
+Редактировать
+#include <iostream>
+#include <cmath>
+using namespace std;
+
+int main() {
+    cout << "sqrt(16) = " << sqrt(16) << endl;
+    cout << "pow(2, 5) = " << pow(2, 5) << endl;
+    cout << "cos(3.14) = " << cos(3.14) << endl;
+    cout << "log(10) = " << log10(10) << endl;
+    return 0;
+}
+🎲 2. <cstdlib> - Tasodifiy sonlar va umumiy funksiyalar
+Vazifasi: Random sonlar yaratish va boshqa umumiy funksiyalarni taqdim etadi.
+
+Funksiya	Vazifasi	Misol
+rand()	0 dan RAND_MAX gacha tasodifiy son qaytaradi	rand() % 100
+srand(x)	Random generatorni boshlash	srand(time(0))
+abs(x)	Modul (musbat qiymat)	abs(-7) → 7
+Misol (Tasodifiy son yaratish):
+
+cpp
+Копировать
+Редактировать
+#include <iostream>
+#include <cstdlib>
+#include <ctime>
+using namespace std;
+
+int main() {
+    srand(time(0)); // Randomni boshlash
+    cout << "Tasodifiy son: " << rand() % 100 << endl;
+    return 0;
+}
+📏 3. <climits> - Butun sonlar chegaralari
+Vazifasi: Butun sonlarning maksimal va minimal qiymatlarini saqlaydi.
+
+O‘zgaruvchi	Vazifasi
+INT_MAX	int ning maksimal qiymati (2147483647)
+INT_MIN	int ning minimal qiymati (-2147483648)
+LONG_MAX	long ning maksimal qiymati
+LONG_MIN	long ning minimal qiymati
+Misol:
+
+cpp
+Копировать
+Редактировать
+#include <iostream>
+#include <climits>
+using namespace std;
+
+int main() {
+    cout << "int ning maksimal qiymati: " << INT_MAX << endl;
+    cout << "int ning minimal qiymati: " << INT_MIN << endl;
+    return 0;
+}
+💾 4. <cfloat> - Haqiqiy sonlar chegaralari
+Vazifasi: float, double va long double uchun chegaralarni taqdim etadi.
+
+O‘zgaruvchi	Vazifasi
+FLT_MAX	float ning maksimal qiymati
+DBL_MAX	double ning maksimal qiymati
+LDBL_MAX	long double ning maksimal qiymati
+Misol:
+
+cpp
+Копировать
+Редактировать
+#include <iostream>
+#include <cfloat>
+using namespace std;
+
+int main() {
+    cout << "double ning maksimal qiymati: " << DBL_MAX << endl;
+    return 0;
+}
+🔢 5. <complex> - Kompleks sonlar bilan ishlash
+Vazifasi: Kompleks sonlar bilan ishlash uchun.
+
+Funksiya	Vazifasi
+std::complex<double>	Kompleks son yaratish
+real(c)	Kompleks sonning haqiqiy qismi
+imag(c)	Kompleks sonning mavhum qismi
+abs(c)	Kompleks sonning moduli
+Misol:
+
+cpp
+Копировать
+Редактировать
+#include <iostream>
+#include <complex>
+using namespace std;
+
+int main() {
+    complex<double> c(3.0, 4.0);
+    cout << "Modul: " << abs(c) << endl; // √(3² + 4²) = 5
+    return 0;
+}
+➕ 6. <numeric> - Sonlar ustida amallar
+Vazifasi: Massiv ustida matematik amallar bajarish.
+
+Funksiya	Vazifasi
+std::accumulate(begin, end, init)	Massiv yig‘indisini hisoblash
+std::gcd(a, b)	Eng katta umumiy bo‘luvchi
+std::lcm(a, b)	Eng kichik umumiy karrali
+Misol:
+
+cpp
+Копировать
+Редактировать
+#include <iostream>
+#include <numeric>
+using namespace std;
+
+int main() {
+    int a = 12, b = 18;
+    cout << "EKUB: " << gcd(a, b) << endl; // 6
+    cout << "EKUK: " << lcm(a, b) << endl; // 36
+    return 0;
+}
+🧮 7. <valarray> - Matematik massivi bilan ishlash
+Vazifasi: Massiv ustida matematik amallar bajarish.
+
+Funksiya	Vazifasi
+std::valarray<int>	Matematik massiv yaratish
+v.sum()	Massiv elementlari yig‘indisi
+v.max()	Eng katta qiymat
+Misol:
+
+cpp
+Копировать
+Редактировать
+#include <iostream>
+#include <valarray>
+using namespace std;
+
+int main() {
+    valarray<int> v = {1, 2, 3, 4, 5};
+    cout << "Yig‘indi: " << v.sum() << endl; // 15
+    return 0;
+}
+📌 Xulosa
+Header	Vazifasi
+<cmath>	Standart matematik funksiyalar
+<cstdlib>	Tasodifiy sonlar va umumiy funksiyalar
+<climits>	Butun sonlar chegaralari
+<cfloat>	Haqiqiy sonlar chegaralari
+<complex>	Kompleks sonlar bilan ishlash
+<numeric>	Sonlar ustida amallar
+<valarray>	Matematik massivlar
