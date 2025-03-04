@@ -1,0 +1,115 @@
+🔹 C++ Vaqt va Sana Kutubxonalari
+Quyidagi jadvalda barcha vaqt va sana bilan ishlash uchun mo‘ljallangan header fayllar va ularning vazifasi keltirilgan.
+
+Header	Vazifasi	Foydalanish
+<ctime>	Vaqt va sana ma’lumotlarini olish	time_t, clock(), time(), difftime()
+<chrono>	Yuqori aniqlikdagi vaqt o‘lchash	std::chrono::high_resolution_clock
+<ratio>	Ulush va vaqt birliklari bilan ishlash	std::ratio<1, 1000>
+<thread>	Ko‘p oqimli dasturlashda kechikishlar bilan ishlash	std::this_thread::sleep_for()
+📝 Har bir headerning vazifasi va ishlatilishi
+Quyida har bir header haqida batafsil ma’lumot va misollar keltirilgan.
+
+1️⃣ <ctime> - Asosiy vaqt va sana kutubxonasi (C uslubida)
+Vazifasi: Hozirgi vaqtni olish, vaqtlar orasidagi farqni hisoblash va vaqtni formatlash imkonini beradi.
+
+Foydalanish:
+
+Hozirgi vaqtni olish: time(nullptr)
+Sana va vaqtni chiqarish: ctime()
+Vaqt farqini hisoblash: difftime()
+Misol:
+
+cpp
+Копировать
+Редактировать
+#include <iostream>
+#include <ctime> // Vaqt va sana uchun
+using namespace std;
+
+int main() {
+    time_t now = time(0); // Hozirgi vaqtni olish
+    cout << "Hozirgi vaqt: " << ctime(&now); // Inson o‘qiy oladigan formatda chiqarish
+
+    struct tm *ltm = localtime(&now);
+    cout << "Yil: " << 1900 + ltm->tm_year << endl;
+    cout << "Oy: " << 1 + ltm->tm_mon << endl;
+    cout << "Kun: " << ltm->tm_mday << endl;
+
+    return 0;
+}
+2️⃣ <chrono> - Yuqori aniqlikdagi vaqt o‘lchash
+Vazifasi: Millisekund, mikrosekund va nanosekundgacha aniqlikda vaqtni o‘lchash.
+Foydalanish:
+
+Aniqlik bilan vaqtni o‘lchash (std::chrono::high_resolution_clock)
+Kechikishlarni hisoblash (std::chrono::duration)
+Joriy vaqtni olish (std::chrono::system_clock)
+Misol:
+
+cpp
+Копировать
+Редактировать
+#include <iostream>
+#include <chrono>
+#include <thread> // Uxlatish uchun
+using namespace std;
+using namespace chrono;
+
+int main() {
+    auto start = high_resolution_clock::now(); // Boshlang‘ich vaqt
+    
+    this_thread::sleep_for(milliseconds(500)); // 500 millisekund kutish
+
+    auto stop = high_resolution_clock::now(); // Tugash vaqti
+    auto duration = duration_cast<milliseconds>(stop - start);
+    
+    cout << "Kod ish vaqti: " << duration.count() << " ms" << endl;
+    return 0;
+}
+3️⃣ <ratio> - Vaqt birliklari va ulushlar
+Vazifasi: Ulush va vaqt birliklarini aniqlik bilan ifodalash uchun ishlatiladi.
+Foydalanish:
+
+Vaqt birliklari va o‘lchamlarni aniqlash (std::ratio<1, 1000>)
+Misol:
+
+cpp
+Копировать
+Редактировать
+#include <iostream>
+#include <ratio>
+using namespace std;
+
+int main() {
+    cout << "1 soniya = " << ratio<1, 1>::num << "/" << ratio<1, 1>::den << " soniya" << endl;
+    cout << "1 millisekund = " << ratio<1, 1000>::num << "/" << ratio<1, 1000>::den << " soniya" << endl;
+    return 0;
+}
+4️⃣ <thread> - Kechikishlar bilan ishlash
+Vazifasi: Kechikish va vaqt o‘lchash uchun ko‘p oqimli dasturlashda qo‘llaniladi.
+Foydalanish:
+
+std::this_thread::sleep_for() — dastur bajarilishini vaqtinchalik to‘xtatish.
+Misol:
+
+cpp
+Копировать
+Редактировать
+#include <iostream>
+#include <thread>
+using namespace std;
+
+int main() {
+    cout << "3 soniya kuting..." << endl;
+    this_thread::sleep_for(chrono::seconds(3)); // 3 soniya kutish
+    cout << "Davom etyapmiz!" << endl;
+    return 0;
+}
+🎯 Xulosa
+C++ da vaqt va sana bilan ishlash uchun turli xil headerlar mavjud, va har biri turli vazifalar uchun ishlatiladi.
+
+Agar sizga kerak bo‘lsa...	Qaysi header?
+🕒 Hozirgi vaqt va sanani olish	<ctime>
+🏁 Aniq vaqt o‘lchash va farqni hisoblash	<chrono>
+📊 Ulush va vaqt birliklari	<ratio>
+⏳ Dastur bajarilishini vaqtincha to‘xtatish (sleep)	<thread>
