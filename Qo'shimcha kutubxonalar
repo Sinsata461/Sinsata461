@@ -1,0 +1,178 @@
+📌 C++ Qo‘shimcha va Maxsus Kutubxonalar
+Quyidagi jadvalda barcha maxsus header fayllar va ularning vazifasi keltirilgan.
+
+Header	Vazifasi	Foydalanish
+<random>	Tasodifiy sonlar generatsiyasi	std::mt19937, std::uniform_int_distribution
+<algorithm>	Algoritmlar (saralash, qidirish, transformatsiya)	std::sort, std::find, std::reverse
+<functional>	Funksional dasturlash vositalari	std::function, std::bind, std::mem_fn
+<iterator>	Iteratorlar bilan ishlash	std::begin(), std::end(), std::advance()
+<limits>	Tiplarning chegaralarini aniqlash	std::numeric_limits<int>::max()
+<locale>	Mintaqaviy sozlamalar bilan ishlash	std::locale, std::use_facet()
+<codecvt>	Unicode va kodlash bilan ishlash	std::wstring_convert, std::codecvt_utf8
+<type_traits>	Compile-time da turga bog‘liq operatsiyalar	std::is_integral, std::is_pointer
+<bitset>	Bit massivlar bilan ishlash	std::bitset<8>
+<cfenv>	Float va arifmetik xatolarni boshqarish	std::feclearexcept(), std::fetestexcept()
+📝 Har bir headerning vazifasi va ishlatilishi
+Quyida har bir header haqida batafsil tushuntirish va misollar berilgan.
+
+1️⃣ <random> - Tasodifiy sonlar generatsiyasi
+Vazifasi: Turli xil tasodifiy sonlar generatsiya qilish.
+Foydalanish:
+
+Psevdotasodifiy generatorlar (std::mt19937).
+Normal taqsimot bo‘yicha generatsiya (std::uniform_int_distribution).
+Misol:
+
+cpp
+Копировать
+Редактировать
+#include <iostream>
+#include <random>
+
+int main() {
+    std::random_device rd;
+    std::mt19937 gen(rd()); // Mersenne Twister generatori
+    std::uniform_int_distribution<int> dist(1, 100);
+
+    std::cout << "Tasodifiy son: " << dist(gen) << std::endl;
+    return 0;
+}
+2️⃣ <algorithm> - Algoritmlar kutubxonasi
+Vazifasi: Ma’lumotlarni saralash, qidirish, transformatsiya qilish algoritmlari.
+Foydalanish:
+
+Saralash: std::sort()
+Qidirish: std::find()
+O‘zgartirish: std::reverse(), std::transform()
+Misol:
+
+cpp
+Копировать
+Редактировать
+#include <iostream>
+#include <vector>
+#include <algorithm>
+
+int main() {
+    std::vector<int> numbers = {5, 2, 8, 1, 3};
+    std::sort(numbers.begin(), numbers.end());
+
+    for (int num : numbers)
+        std::cout << num << " ";
+    return 0;
+}
+3️⃣ <functional> - Funksional dasturlash
+Vazifasi: Lambda funksiyalar, callback va boshqa funksional yondashuvlar.
+Foydalanish:
+
+Funksiyalarni saqlash: std::function
+Callback funksiyalar yaratish: std::bind
+A’zolarni bog‘lash: std::mem_fn
+Misol:
+
+cpp
+Копировать
+Редактировать
+#include <iostream>
+#include <functional>
+
+void printMessage(const std::string& message) {
+    std::cout << message << std::endl;
+}
+
+int main() {
+    std::function<void(const std::string&)> func = printMessage;
+    func("Salom, dunyo!");
+    return 0;
+}
+4️⃣ <iterator> - Iteratorlar bilan ishlash
+Vazifasi: Ma’lumotlar tuzilmalari uchun iteratorlar yaratish va ulardan foydalanish.
+Foydalanish:
+
+Boshlang‘ich va oxirgi elementni olish: std::begin(), std::end()
+Iteratorni oldinga surish: std::advance()
+Misol:
+
+cpp
+Копировать
+Редактировать
+#include <iostream>
+#include <vector>
+#include <iterator>
+
+int main() {
+    std::vector<int> nums = {1, 2, 3, 4, 5};
+    auto it = nums.begin();
+    std::advance(it, 2);
+    std::cout << "Uchinchi element: " << *it << std::endl;
+    return 0;
+}
+5️⃣ <limits> - Tiplarning chegaralarini aniqlash
+Vazifasi: Turli turdagi o‘zgaruvchilar chegaralarini bilish.
+Foydalanish:
+
+Int, float, double uchun maksimal/minimal qiymatlar.
+Misol:
+
+cpp
+Копировать
+Редактировать
+#include <iostream>
+#include <limits>
+
+int main() {
+    std::cout << "Maksimal int: " << std::numeric_limits<int>::max() << std::endl;
+    return 0;
+}
+6️⃣ <locale> - Mintaqaviy sozlamalar bilan ishlash
+Vazifasi: Til va hududiy sozlamalar asosida matnni formatlash.
+Foydalanish:
+
+Valyuta, sanalar, vaqt formatlari bilan ishlash.
+Misol:
+
+cpp
+Копировать
+Редактировать
+#include <iostream>
+#include <locale>
+
+int main() {
+    std::locale loc("en_US.UTF-8");
+    std::cout.imbue(loc);
+    std::cout << "Mintaqaviy sozlamalar o‘rnatildi!" << std::endl;
+    return 0;
+}
+7️⃣ <codecvt> - Unicode va kodlash
+Vazifasi: std::wstring va UTF-8 o‘rtasida o‘tish.
+Foydalanish:
+
+UTF-8 kodlash uchun ishlatiladi.
+Misol:
+
+cpp
+Копировать
+Редактировать
+#include <iostream>
+#include <codecvt>
+#include <locale>
+
+int main() {
+    std::wstring_convert<std::codecvt_utf8<wchar_t>> converter;
+    std::wstring ws = L"Salom, dunyo!";
+    std::string utf8_str = converter.to_bytes(ws);
+
+    std::cout << utf8_str << std::endl;
+    return 0;
+}
+🎯 Xulosa
+C++ dagi qo‘shimcha va maxsus kutubxonalar quyidagilarga yordam beradi:
+
+Agar sizga kerak bo‘lsa...	Qaysi header?
+🎲 Tasodifiy sonlar	<random>
+🔢 Algoritmlar va saralash	<algorithm>
+🎭 Funksional dasturlash	<functional>
+🔄 Iteratorlar	<iterator>
+🛠 Tiplar chegarasi	<limits>
+🌍 Mintaqaviy sozlamalar	<locale>
+🔡 Unicode bilan ishlash	<codecvt>
