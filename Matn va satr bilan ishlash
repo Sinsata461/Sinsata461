@@ -1,0 +1,122 @@
+📌 C++ dagi barcha matn va satr bilan ishlash headerlari
+C++ da matnlar bilan ishlash uchun 3 ta muhim header mavjud:
+
+Header	Vazifasi	Misollar
+<cstring>	C uslubidagi satr (char*) funksiyalari	strlen, strcpy, strcmp
+<string>	C++ uslubidagi std::string klassi	s.length(), s.find(), s.substr()
+<sstream>	Matnli oqimlar (string stream)	std::stringstream, std::istringstream
+Keling, har birini batafsil tushuntiramiz va misollar bilan ko‘rib chiqamiz.
+
+➊ <cstring> - C uslubidagi satr (char*) funksiyalari
+Vazifasi: Bu header C uslubidagi satr funksiyalarini (char*) taqdim etadi.
+
+Funksiya	Vazifasi	Misol
+strlen(s)	Satr uzunligini topish	strlen("Hello") → 5
+strcpy(dest, src)	Satrni nusxalash	strcpy(a, b)
+strcat(dest, src)	Satrlarni birlashtirish	strcat(a, b)
+strcmp(s1, s2)	Satrlarni taqqoslash	strcmp("abc", "def") → -1
+strchr(s, ch)	Satr ichida belgi izlash	strchr("hello", 'e')
+strstr(s1, s2)	Satr ichida kichik satr izlash	strstr("hello", "ll")
+Misol:
+
+cpp
+Копировать
+Редактировать
+#include <iostream>
+#include <cstring>
+using namespace std;
+
+int main() {
+    char s1[20] = "Salom";
+    char s2[] = " Dunyo";
+
+    strcat(s1, s2); // Satrlarni qo‘shish
+    cout << "Yangi satr: " << s1 << endl; // "Salom Dunyo"
+
+    cout << "Uzunligi: " << strlen(s1) << endl; // 11
+    return 0;
+}
+📌 Qayerda qo‘llaniladi?
+
+Eski C dasturlarida
+Char massivi (char[]) bilan ishlaganda
+Kam resurs talab qiluvchi dasturlarda
+➋ <string> - C++ std::string klassi
+Vazifasi: Bu header zamonaviy std::string klassini taqdim etadi.
+
+Metod	Vazifasi	Misol
+s.length()	Satr uzunligini topish	"Hello".length() → 5
+s.size()	length() bilan bir xil	"C++".size() → 3
+s.append(str)	Satr qo‘shish	"abc".append("de") → "abcde"
+s.substr(pos, len)	Qism satr ajratish	"abcdef".substr(2,3) → "cde"
+s.find(str)	Satrni qidirish	"abcdef".find("cd") → 2
+s.replace(pos, len, str)	Qismni almashtirish	"abcdef".replace(2,3,"XYZ") → "abXYZf"
+s.erase(pos, len)	Qismni o‘chirish	"abcdef".erase(2,3) → "abf"
+Misol:
+
+cpp
+Копировать
+Редактировать
+#include <iostream>
+#include <string>
+using namespace std;
+
+int main() {
+    string s = "Salom, Dunyo!";
+    
+    cout << "Uzunligi: " << s.length() << endl;
+    cout << "Qism: " << s.substr(7, 5) << endl; // "Dunyo"
+    
+    s.replace(7, 5, "C++");
+    cout << "Yangilangan: " << s << endl; // "Salom, C++!"
+    return 0;
+}
+📌 Qayerda qo‘llaniladi?
+
+C++ dasturlarida tavsiya etiladi
+Matn bilan ishlovchi dasturlarda
+Stringlarni oson manipulyatsiya qilishda
+➌ <sstream> - Matnli oqimlar bilan ishlash
+Vazifasi: Matndan son, sondan matn o‘tkazish, satrni bo‘lish, oqim bilan ishlash.
+
+Funksiya	Vazifasi	Misol
+std::stringstream	String oqimi yaratish	stringstream ss("123")
+std::istringstream	Satrni o‘qish oqimi	istringstream iss("10 20 30")
+std::ostringstream	Satrga yozish oqimi	ostringstream oss
+ss >> x	Oqimdan o‘qish	ss >> num
+ss << x	Oqimga yozish	ss << "Hello"
+Misol:
+
+cpp
+Копировать
+Редактировать
+#include <iostream>
+#include <sstream>
+using namespace std;
+
+int main() {
+    string data = "100 200 300";
+    istringstream iss(data);
+    int a, b, c;
+    
+    iss >> a >> b >> c;
+    cout << "Olingan sonlar: " << a << ", " << b << ", " << c << endl;
+    
+    return 0;
+}
+📌 Qayerda qo‘llaniladi?
+
+Stringdan son olish (stoi yoki stod o‘rniga)
+CSV yoki matnli fayllarni ajratish
+Kiritish oqimlarini boshqarish
+🎯 Xulosa
+C++ matn va satr bilan ishlash uchun 3 ta asosiy header bor:
+
+1️⃣ <cstring> → C uslubidagi satrlar (char massivlari) bilan ishlaydi
+2️⃣ <string> → C++ std::string klassi bilan ishlaydi (qulay va xavfsiz)
+3️⃣ <sstream> → Matnli oqimlar bilan ishlaydi (stringni bo‘lish va tahlil qilish)
+
+✅ Qaysi birini ishlatish kerak?
+Agar C dasturidan foydalanayotgan bo‘lsangiz → <cstring>
+Agar zamonaviy C++ dastur yozsangiz → <string>
+Agar satrlarni tahlil qilish yoki sonlarni ajratish kerak bo‘lsa → <sstream>
