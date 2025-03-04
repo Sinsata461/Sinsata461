@@ -1,0 +1,191 @@
+🔹 C++ Xatolarni Boshqarish va Diagnostika Headerlari
+C++ tilida xatolarni boshqarish va dastur ish faoliyatini diagnostika qilish uchun maxsus header fayllar mavjud. Ushbu kutubxonalar xatolarni aniqlash, tashxis qo‘yish va ularni boshqarish imkonini beradi.
+
+📌 C++ Xatolarni Boshqarish va Diagnostika Kutubxonalari
+Quyidagi jadvalda barcha xatolarni boshqarish va diagnostika qilish bilan ishlaydigan header fayllar va ularning vazifasi keltirilgan.
+
+Header	Vazifasi	Foydalanish
+<exception>	Xatolarni boshqarish uchun asosiy bazaviy kutubxona	try, catch, throw
+<stdexcept>	Standart istisno (exception) klasslarini taqdim etadi	std::runtime_error, std::logic_error
+<cassert>	Dasturda shartlarni tekshirish (assert)	assert(x > 0)
+<cerrno>	C uslubidagi xatolar kodi bilan ishlash	errno, perror(), strerror()
+<system_error>	Tizim xatolari bilan ishlash	std::system_error, std::error_code
+<typeinfo>	Obyektlarning turini aniqlash (typeid())	typeid(obj).name()
+<csetjmp>	setjmp va longjmp funksiyalari yordamida xatoni ushlab qolish	setjmp(), longjmp()
+<csignal>	Signal (tizim darajasidagi signal) bilan ishlash	signal(SIGINT, handler)
+📝 Har bir headerning vazifasi va ishlatilishi
+Quyida har bir header haqida batafsil tushuntirish va misollar berilgan.
+
+1️⃣ <exception> - Xatolarni boshqarish
+Vazifasi: Bu kutubxona istisnolarni (exception) yaratish va ishlatish uchun asosiy try-catch-throw mexanizmini ta’minlaydi.
+Foydalanish:
+
+std::exception klassidan voris olib, o‘zimizning xatolarni yaratish.
+Bazaviy istisno obyekti sifatida ishlaydi.
+Misol:
+
+cpp
+Копировать
+Редактировать
+#include <iostream>
+#include <exception>
+
+void test() {
+    throw std::exception(); // Xato tashlash
+}
+
+int main() {
+    try {
+        test();
+    } catch (const std::exception& e) {
+        std::cout << "Xatolik aniqlandi: " << e.what() << std::endl;
+    }
+    return 0;
+}
+2️⃣ <stdexcept> - Standart istisno klasslari
+Vazifasi: Oldindan tayyorlangan mantiqiy va bajarish vaqtidagi xatolarni taqdim etadi.
+Foydalanish:
+
+std::logic_error – Mantiqiy xatolar (masalan, out_of_range).
+std::runtime_error – Bajarish vaqtida yuzaga keladigan xatolar.
+Misol:
+
+cpp
+Копировать
+Редактировать
+#include <iostream>
+#include <stdexcept>
+
+void test(int value) {
+    if (value < 0)
+        throw std::runtime_error("Manfiy son kiritildi!");
+}
+
+int main() {
+    try {
+        test(-5);
+    } catch (const std::runtime_error& e) {
+        std::cout << "Xatolik: " << e.what() << std::endl;
+    }
+    return 0;
+}
+3️⃣ <cassert> - Dasturda shartlarni tekshirish (assert)
+Vazifasi: Dastur ish jarayonida muayyan shartlarning bajarilishini tekshiradi va agar bajarilmasa, dasturni to‘xtatadi.
+Foydalanish:
+
+assert(condition) – Agar shart noto‘g‘ri bo‘lsa, dastur xatolik bilan to‘xtaydi.
+Misol:
+
+cpp
+Копировать
+Редактировать
+#include <iostream>
+#include <cassert>
+
+int main() {
+    int x = -1;
+    assert(x >= 0); // Agar x manfiy bo‘lsa, dastur xatolik bilan to‘xtaydi
+    std::cout << "Dastur davom etmoqda...\n";
+    return 0;
+}
+4️⃣ <cerrno> - Xatolar kodi bilan ishlash
+Vazifasi: errno orqali tizim darajasidagi xatolarni boshqarish.
+Foydalanish:
+
+perror() – Xatolik haqida matnli ma’lumot chiqarish.
+errno – Xatolik kodi.
+Misol:
+
+cpp
+Копировать
+Редактировать
+#include <iostream>
+#include <cerrno>
+#include <cstring>
+#include <cstdio>
+
+int main() {
+    FILE* file = fopen("yoq_fayl.txt", "r");
+    if (!file) {
+        std::cerr << "Fayl ochilmadi: " << strerror(errno) << std::endl;
+    }
+    return 0;
+}
+5️⃣ <system_error> - Tizim xatolari bilan ishlash
+Vazifasi: OS tizim xatolari bilan ishlash va ularni boshqarish.
+Foydalanish:
+
+std::system_error - Xatolarni OS darajasida ushlash.
+std::error_code - Xatolik kodlarini saqlash.
+Misol:
+
+cpp
+Копировать
+Редактировать
+#include <iostream>
+#include <system_error>
+
+int main() {
+    try {
+        throw std::system_error(std::make_error_code(std::errc::permission_denied));
+    } catch (const std::system_error& e) {
+        std::cout << "System xatolik: " << e.what() << std::endl;
+    }
+    return 0;
+}
+6️⃣ <typeinfo> - Ma’lumot turlari haqida info
+Vazifasi: Obyektlarning turini aniqlash (typeid()).
+Foydalanish:
+
+Obyekt turini aniqlash.
+RTTI (Run-Time Type Information) mexanizmini ishlatish.
+Misol:
+
+cpp
+Копировать
+Редактировать
+#include <iostream>
+#include <typeinfo>
+
+int main() {
+    int a = 5;
+    std::cout << "a ning turi: " << typeid(a).name() << std::endl;
+    return 0;
+}
+7️⃣ <csetjmp> - setjmp va longjmp yordamida xatoni ushlab qolish
+Vazifasi: C uslubidagi to‘g‘ridan-to‘g‘ri sakrash (jumping) mexanizmini taqdim etadi.
+Foydalanish:
+
+G‘ayritabiiy kod bajarilishi uchun ishlatiladi (kam qo‘llaniladi).
+Misol:
+
+cpp
+Копировать
+Редактировать
+#include <iostream>
+#include <csetjmp>
+
+jmp_buf buffer;
+
+void errorHandler() {
+    longjmp(buffer, 1);
+}
+
+int main() {
+    if (setjmp(buffer) == 0) {
+        std::cout << "Birinchi bajarish\n";
+        errorHandler();
+    } else {
+        std::cout << "Xatolik sodir bo‘ldi!\n";
+    }
+    return 0;
+}
+🎯 Xulosa
+Agar siz xatolarni boshqarish va diagnostika qilishni istasangiz, quyidagi headerlar yordam beradi:
+
+Agar sizga kerak bo‘lsa...	Qaysi header?
+🔥 Istisno (exception) yaratish	<exception>, <stdexcept>
+✅ Shartlarni tekshirish (assert)	<cassert>
+📂 Fayl ochish xatosini tekshirish	<cerrno>
+⚙️ Tizim xatolarini boshqarish	<system_error>
+🔍 Obyekt turini tekshirish	<typeinfo>
